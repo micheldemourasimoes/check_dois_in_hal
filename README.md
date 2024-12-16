@@ -16,7 +16,7 @@ Dans le répertoire test se trouve un fichier nommé 40_DOIs.csv contenant une c
 <h2>Dépendance</h2>
 L'outil est dépendant de l'API Hal telle qu'elle existe aujourd'hui (décembre 2024) avec le point d'entrée https://api.archives-ouvertes.fr/search<br/>
 La documentation de l'API Hal : <a href='https://api.archives-ouvertes.fr/docs/search' target='_blank'>https://api.archives-ouvertes.fr/docs/search</a>
-<h2>fonctionnalités, fonction</h2>
+<h2>fonctionnalités, fonctions</h2>
 La fonction upload_files_function() sert à uploader le fichier<br/>
 A l'intérieur de cette fonction, la fonction csv_to_array_function() sert à nettoyer les données entrantes afin qu'à la fin de chaque ligne il y ait un \r et rien d'autre<br/>
 La fonction download_file_function() sert à downloader le fichier de résultat<br/>
