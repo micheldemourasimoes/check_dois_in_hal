@@ -3,7 +3,7 @@
 <h2>En un mot</h2>
 L’outil est construit sur l'API Hal
 <br/>
-Son objectif est de pointer les DOIs absents dans Hal à partir d'un <b>lot</b> de DOIs
+Son objectif est de pointer les DOIs d'un <b>lot</b> de DOIs qui sont <b>absents</b> dans Hal à partir 
 <br/>
 L’utilisateur est invité à uploader un fichier .csv contenant une colonne de DOIs
 <br/>
@@ -17,6 +17,7 @@ Pour permettre une instalation la plus facile possible tout le code (toutes les 
 Dans le répertoire test se trouve un fichier nommé 40_DOIs.csv contenant une colonne de DOIs. Il permet de tester l'outil
 =>test
 <h2>Dépendance</h2>
-API
+L'outil est dépendant de l'API Hal telle qu'elle existe aujourd'hui (décembre 2024) avec le point d'entrée https://api.archives-ouvertes.fr/search<br/>
+La documentation de l'API Hal : 
 <h2>fonctinnalités, fonction</h2>
 
