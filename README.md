@@ -1,11 +1,11 @@
 # check_dois_in_hal
-Vérification de présence de DOIs dans Hal, par lot
-<br/>
-en un mot
-langage
+<h1>Vérification de présence de DOIs dans Hal, par lot</h1>
+<h2>en un mot</h2>
+<h2>langage</h2>
 =>browser
-fichiers
+<h2>fichiers</h2>
 =>test
-dépendance
+<h2>dépendance</h2>
 API
-fonctinnalités, fonction
+<h2>fonctinnalités, fonction</h2>
+
