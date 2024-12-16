@@ -7,7 +7,7 @@ Son objectif est de vérifier <b>par lot</b> la présence de DOIs dans Hal
 <br/>
 L’utilisateur est invité à uploader un fichier .csv contenant une colonne de DOIs
 <br/>
-Dès que le choix du fichier est fait, le processus s’enclenche. A la fin du processus, l’utilisateur peut les décharger sous la forme d’un fichier .csv les DOIs manquants dans Hal
+Dès que le choix du fichier est fait, le processus s’enclenche. A la fin du processus, l’utilisateur peut décharger les DOIs manquants dans Hal sous la forme d’un fichier .csv
 <h2>Langage</h2>
 JavaScript<br/>
 N'importe quel browser permet d'utiliser le code
