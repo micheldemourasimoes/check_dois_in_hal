@@ -3,7 +3,7 @@
 <h2>En un mot</h2>
 L’outil est construit sur l'API Hal
 <br/>
-Son objectif est de vérifier <b>par lot</b> la présence de DOIs dans Hal
+Son objectif est de pointer les DOIs absents dans Hal à partir d'un <b>lot</b> de DOIs
 <br/>
 L’utilisateur est invité à uploader un fichier .csv contenant une colonne de DOIs
 <br/>
