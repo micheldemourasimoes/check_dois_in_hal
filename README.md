@@ -19,6 +19,6 @@ La documentation de l'API Hal : <a href='https://api.archives-ouvertes.fr/docs/s
 <h2>fonctionnalités, fonction</h2>
 La fonction upload_files_function() sert à uploader le fichier<br/>
 A l'intérieur de cette fonction, la fonction csv_to_array_function() sert à nettoyer les données entrantes afin qu'à la fin de chaque ligne il y ait un \r et rien d'autre<br/>
-La fonction udownload_file_function() sert à downloader le fichier de résultat<br/>
+La fonction download_file_function() sert à downloader le fichier de résultat<br/>
 A l'intériure de cette fonction, la fonction array_to_csv_function() transforme l'array dans laquelle ont été stockés les résultats (dois_missing_in_hal) en une chaîne de caractère qui sera comprise comme un .csv à une seule colonne : des données séparées par un \n\r, ie une passage à la ligne<br/>
 La fonction get_hal_data_function() prend une array de DOIs entrée, les passe en revue via un while et, chaque fois, interroge l'API Hal à la recherche de la donnée "response" >>> "numFound". Si cette donnée est à zéro, cela signifie que le DOI n'est pas dans Hal, et donc mérite d'êtres stocké (dans l'array dois_missing_in_hal). A noter, le while mis en oeuvre ici est ralenti par la commande await new Promise(r => setTimeout(r, 10));
