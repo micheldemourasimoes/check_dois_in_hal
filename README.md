@@ -12,7 +12,9 @@ Dès que le choix du fichier est fait, le processus s’enclenche. A la fin du p
 JavaScript<br/>
 N'importe quel browser permet d'utiliser le code
 <h2>Fichiers</h2>
-Pour permettre une instalation la plus facile possible tout le code (toutes les fonctions) se trouve dans un seul fichier
+Pour permettre une instalation la plus facile possible tout le code (toutes les fonctions) se trouve dans un seul fichier, upload_dois_and_check_against_hal.html
+<br/>
+Dans un fichier .csv contenant une colonne de DOIs permet de tester l'outil
 =>test
 <h2>Dépendance</h2>
 API
