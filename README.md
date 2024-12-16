@@ -1,5 +1,5 @@
 # check_dois_in_hal
-<h1>Vérification de présence de DOIs dans Hal, par lot</h1>
+<h1>Vérification de la présence de DOIs dans Hal, par lot</h1>
 <h2>En un mot</h2>
 L’outil est construit sur l'API Hal
 <br/>
