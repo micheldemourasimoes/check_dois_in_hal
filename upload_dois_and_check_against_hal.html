@@ -1,0 +1,222 @@
+<html>
+<head>
+<title>
+test_291_upload_dois_and_check_againts_hal
+</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<meta charset="UTF-8">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<!--
+source:291
+-->
+<style>
+table 
+{
+	border-collapse: collapse;
+	border: 1px solid black;
+}
+td 
+{
+	border: 1px solid black;
+	padding: 5px;
+	display: table-cell;
+	vertical-align: top; 
+}
+</style>
+</head>
+<body>
+<h1>Vérification de présence d'un DOI dans Hal, par lot</h1>
+<h2></h2>
+<!-- cet anchor cachée sert au download (save) du fichier-->
+<a id='hidden_anchor' style='display:none' type='text/xml'></a>
+Le fichier à charger doit être de format .csv, ne contenir qu'une seule colonne, remplie uniquement de DOIs, sans en-tête
+<br/>
+<input type="file"  id="upload_file" onchange="upload_files_function()" style="display: none;" /><br />
+<input type="button"  id="upload_button" value="upload fichier" onclick="document.getElementById('upload_file').click();" />
+<div class="content"></div>
+<div id='display_spot'></div>
+<div id='dashboard_spot' style="display:none;">
+<table>
+<tr>
+<td>
+<span id="on">0</span>/<span id="to"></span>&nbsp;DOIs
+</td>
+<td>
+<span id="missing">0</span>&nbsp;manquant dans Hal
+</td>
+</tr>
+</table>
+</div>
+<br/>
+<div id='result_spot' style="display:none;">
+<table>
+<tr>
+<td>
+Terminé :<span id='end_result'></span>&nbsp;DOIs manquant dans Hal
+</td>
+</tr>
+</table>
+</div>
+<br/>
+<input type="button" id="download_button" value="download fichier" style="display:none;" onclick="download_file_function()"></input>
+<br/>
+<div id='test_spot'></div>
+<script>
+
+var file_content="";
+var dois=new Array();
+var dois_missing_in_hal=new Array();
+
+function upload_files_function() 
+{
+	const content = document.querySelector('.content');
+	const [file] = document.querySelector('input[type=file]').files;
+	const reader = new FileReader();
+	reader.addEventListener("load", () => 
+	{
+// stockage du contenu des fichiers
+		file_content=reader.result;
+// on vide le file (car sinon, on ne pourrait pas charger successivement deux fois le même fichier, ce qu'on n'a pas à faire mais
+// on ne sait jamais
+		document.getElementById("upload_file").value="";
+// on arrive à la fin
+		document.getElementById("upload_button").style.display="none";
+// traitement des résultat
+		csv_to_array_function(file_content);
+		if (dois.length!=0)
+		{
+			document.getElementById("upload_button").style.display="none";
+			document.getElementById("dashboard_spot").style.display="block";	
+			document.getElementById("to").innerHTML=dois.length;	
+			get_hal_data_function(dois);
+		}
+		else
+		{
+			document.getElementById("display_spot").innerHTML+="fichier inutilisable";	
+		}
+	}, false);
+
+	if (file) 
+	{
+		reader.readAsText(file);
+	}
+}
+
+function download_file_function()
+{
+	data = new Blob([array_to_csv_function(dois_missing_in_hal)]); 
+	var file_name="DOIs_manquant_dans_Hal.csv";
+    var hidden_anchor = document.getElementById('hidden_anchor');
+	hidden_anchor.href = URL.createObjectURL(data);
+	document.getElementById('hidden_anchor').download=file_name;
+	document.getElementById('hidden_anchor').click();
+}
+
+async function get_hal_data_function(one_array_of_dois)
+{
+	var i=0;
+	while (i<one_array_of_dois.length)
+	{
+		document.getElementById("on").innerHTML=Number(document.getElementById("on").innerHTML)+1;	
+		await new Promise(r => setTimeout(r, 10));
+		let response;
+		try 
+		{
+			response = await fetch("https://api.archives-ouvertes.fr/search/?q=doiId_s:"+one_array_of_dois[i]+"&rows=1&wt=json&fl=docid");
+		} 
+		catch  
+		{
+		}
+		if (response?.ok) 
+		{
+			let response_as_text;
+			try 
+			{
+				response_as_text = await response.text();
+			}
+			catch  
+			{
+			}
+			if (response_as_text!="") 
+			{
+				response_as_object = JSON.parse(response_as_text);
+				if (response_as_object["response"]["numFound"]==0)
+				{
+					if (dois_missing_in_hal.indexOf(one_array_of_dois[i])==-1)
+					{
+						dois_missing_in_hal.push(one_array_of_dois[i]);
+					}
+					document.getElementById("missing").innerHTML=Number(document.getElementById("missing").innerHTML)+1;	
+				}
+// on arrive à la fin
+				if (i==one_array_of_dois.length-1)
+				{
+					document.getElementById("dashboard_spot").style.display="none";
+					document.getElementById("result_spot").style.display="block";
+					document.getElementById("end_result").innerHTML=dois_missing_in_hal.length;	
+					document.getElementById("upload_button").style.display="block";
+					if (dois_missing_in_hal.length>0)
+					{
+						document.getElementById("download_button").style.display="block";
+					}
+				}
+			}
+		}
+		i++
+	}
+}
+
+function array_to_csv_function(array) 
+{
+	let str="";
+	for (var i = 0; i < array.length; i++) 
+	{
+		str+=array[i]+'\r\n';
+	}
+	return str;
+}
+
+function csv_to_array_function(string) 
+{
+// pour remplacer "\r\n", puis "\n\r" par "\r" sur la totalité de string
+	while (string.search("\r\n")!=-1)
+	{
+		string=string.replace('\r\n', '\r');
+	}
+	while (string.search("\n\r")!=-1)
+	{
+		string=string.replace('\n\r', '\r');
+	}
+// pour remplacer "\n", (un "\n" isolé = qui n'aurait pas été associé à un "\r") par "\r" sur la totalité de string
+	while (string.search("\n")!=-1)
+	{
+		string=string.replace('\n', '\r');
+	}
+// nettoyages : pour remplacer " \r" par "\r" = supprimer les espaces en fin de ligne
+	while (string.search(" \r")!=-1)
+	{
+		string=string.replace(' \r', '\r');
+	}
+// nettoyages : pour remplacer "\r\r" par "\r" = supprimer les lignes vides
+	while (string.search("\r\r")!=-1)
+	{
+		string=string.replace('\r\r', '\r');
+	}
+// nettoyages : si le dernier caractère est un "\r", le supprimer
+	if (string.substring(string.length-1,string.length)=="\r")
+	{
+		string=string.substring(0,string.length-1)
+	}
+// on supprime toutes les quotes (")
+	while (string.search('"')!=-1)
+	{
+		string=string.replace('"', '');
+	}
+	dois = string.split("\r");
+}
+/*sources : 
+https://developer.mozilla.org/en-US/docs/Web/API/FileReader/readAsText
+https://stackoverflow.com/questions/1084925/input-type-file-show-only-button
+*/
+</script>
+</body>
