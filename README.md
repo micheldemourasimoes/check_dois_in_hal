@@ -1,9 +1,7 @@
 # check_dois_in_hal
 <h1>Vérification de la présence de DOIs dans Hal, par lot</h1>
 <h2>En un mot</h2>
-L’outil est construit sur l'API Hal
-<br/>
-Son objectif est de pointer les DOIs d'un <b>lot</b> de DOIs qui sont <b>absents</b> dans Hal à partir 
+L’outil est construit sur l'API Hal. Son objectif est de pointer, parmi un <b>lot</b> de DOIs, ceux  qui sont <b>absents</b> de Hal. 
 <br/>
 L’utilisateur est invité à uploader un fichier .csv contenant une colonne de DOIs
 <br/>
@@ -15,9 +13,11 @@ N'importe quel browser permet d'utiliser le code
 Pour permettre une instalation la plus facile possible tout le code (toutes les fonctions) se trouve dans un seul fichier, upload_dois_and_check_against_hal.html
 <br/>
 Dans le répertoire test se trouve un fichier nommé 40_DOIs.csv contenant une colonne de DOIs. Il permet de tester l'outil
-=>test
 <h2>Dépendance</h2>
 L'outil est dépendant de l'API Hal telle qu'elle existe aujourd'hui (décembre 2024) avec le point d'entrée https://api.archives-ouvertes.fr/search<br/>
 La documentation de l'API Hal : 
 <h2>fonctinnalités, fonction</h2>
-
+La fonction upload_files_function() sert à uploader le fichier<br/>
+A l'intérieur de cette fonction, la fonction csv_to_array_function() sert à nettoyer les données entrantes afin qu'à la fin de chaque ligne il y ait un \r et rien d'autre
+La fonction udownload_file_function() sert à downloader le fichier de résultat<br/>
+A l'intériure de cette fonction, la fonction array_to_csv_function() transforme l'array dans laquelle ont été stockés les résultats (dois_missing_in_hal) en une chaîne de caractère qui sera comprise comme un .csv à une seule colonne : des données séparées par un \n\r, ie une passage à la ligne
