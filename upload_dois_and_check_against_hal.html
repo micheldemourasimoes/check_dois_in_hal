@@ -66,6 +66,9 @@ var dois_missing_in_hal=new Array();
 
 function upload_files_function() 
 {
+	document.getElementById("dashboard_spot").style.display="none";	
+	document.getElementById("result_spot").style.display="none";
+	document.getElementById("missing").innerHTML=0;	
 	const content = document.querySelector('.content');
 	const [file] = document.querySelector('input[type=file]').files;
 	const reader = new FileReader();
