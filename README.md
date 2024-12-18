@@ -3,9 +3,13 @@
 <h2>En un mot</h2>
 L'objectif de l'outil est de pointer, parmi un <b>lot</b> de DOIs stockés dans un fichier .csv, ceux  qui sont <b>absents</b> de Hal. 
 <br/>
-L’outil est construit sur l'API Hal
+Il est destiné à des administrateurs Hal
 <br/>
-L’utilisateur est invité à uploader un fichier .csv contenant une colonne de DOIs
+Il est construit sur l'API Hal
+<br/>
+Il a été testé avec en entrée un fichier .csv contenant 1000 DOIs. Temps de traitement dans ce cas : environ 2.30 minutes
+<h2>Utilisation</h2>
+Sur la page d'accueil l’utilisateur est invité à uploader un fichier .csv contenant une colonne de DOIs
 <br/>
 Dès que le choix du fichier est fait, le processus s’enclenche. A la fin du processus, l’utilisateur peut décharger les DOIs manquants dans Hal sous la forme d’un fichier .csv
 <br/>
